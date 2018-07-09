@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Pemandu Wisata</string>
+    <item name="fastadapter_item_bahasa" type="id" />
+</resources>
