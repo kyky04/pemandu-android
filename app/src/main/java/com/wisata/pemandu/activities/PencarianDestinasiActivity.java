@@ -1,17 +1,30 @@
 package com.wisata.pemandu.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.wisata.pemandu.R;
 import com.wisata.pemandu.adapters.DestinasiAdapter;
@@ -21,16 +34,20 @@ import com.wisata.pemandu.models.DestinasiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.annotations.NonNull;
 
 import static com.wisata.pemandu.data.Constans.DESTINASI;
 import static com.wisata.pemandu.data.Constans.PEMANDU;
 
 public class PencarianDestinasiActivity extends AppCompatActivity {
     private static final String TAG = "PencarianBahasaActivity";
+
+
     @BindView(R.id.recyler)
     RecyclerView recyler;
     @BindView(R.id.refresh)
@@ -38,6 +55,10 @@ public class PencarianDestinasiActivity extends AppCompatActivity {
     ItemAdapter itemAdapter;
     @BindView(R.id.btn_ok)
     Button btnOk;
+    @BindView(R.id.tv_latitude)
+    TextView tvLatitude;
+    @BindView(R.id.tv_langitude)
+    TextView tvLongitude;
 
     List<DataItemDestinasi> itemBahasaList = new ArrayList<>();
 
@@ -49,6 +70,7 @@ public class PencarianDestinasiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pencarian_bahasa);
         ButterKnife.bind(this);
+
 
 //        itemAdapter = new ItemAdapter();
 
@@ -134,4 +156,7 @@ public class PencarianDestinasiActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PencarianPemanduActivity.class);
         startActivity(intent);
     }
+
+
+
 }

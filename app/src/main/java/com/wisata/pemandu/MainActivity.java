@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.wisata.pemandu.activities.BeritaActivity;
 import com.wisata.pemandu.activities.DestinasiActivity;
+import com.wisata.pemandu.activities.InfoDestinasiActivity;
+import com.wisata.pemandu.activities.LocationServiceActivity;
 import com.wisata.pemandu.activities.PencarianBahasaActivity;
 
 import butterknife.BindView;
@@ -16,13 +20,13 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_pencarian)
-    Button btnPencarian;
+    LinearLayout btnPencarian;
     @BindView(R.id.btn_destinasi)
-    Button btnDestinasi;
+    LinearLayout btnDestinasi;
     @BindView(R.id.btn_pemandu)
-    Button btnPemandu;
+    LinearLayout btnPemandu;
     @BindView(R.id.btn_berita)
-    Button btnBerita;
+    LinearLayout btnBerita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, PencarianBahasaActivity.class));
                 break;
             case R.id.btn_destinasi:
+                startActivity(new Intent(this, InfoDestinasiActivity.class));
                 break;
             case R.id.btn_pemandu:
                 startActivity(new Intent(this, DestinasiActivity.class));
                 break;
             case R.id.btn_berita:
+                startActivity(new Intent(this, LocationServiceActivity.class));
                 break;
         }
     }
