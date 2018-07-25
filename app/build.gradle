@@ -47,6 +47,7 @@ dependencies {
     implementation 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.mikepenz:fastadapter:3.2.7'
+    implementation 'com.google.android.gms:play-services-location:11.0.0'
     testImplementation 'junit:junit:4.12'
     annotationProcessor 'org.parceler:parceler:1.1.10'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

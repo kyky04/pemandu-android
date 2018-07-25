@@ -2,17 +2,14 @@ package com.wisata.pemandu.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.wisata.pemandu.R;
-import com.wisata.pemandu.algorithm.JaroWinkler;
 import com.wisata.pemandu.models.DataItemDestinasi;
+import com.wisata.pemandu.models.DataItemPemandu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +22,10 @@ import butterknife.ButterKnife;
  * Created by Comp on 2/11/2018.
  */
 
-public class DestinasiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class InfoDestinasiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<DataItemDestinasi> listItem;
+
 
 
     private Context ctx;
@@ -41,30 +39,33 @@ public class DestinasiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public DestinasiAdapter(Context ctx) {
+    public InfoDestinasiAdapter(Context ctx) {
         this.ctx = ctx;
         listItem = new ArrayList<>();
     }
 
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_pemandu)
-        TextView tvPemandu;
+        @BindView(R.id.tv_name)
+        TextView tvName;
+        @BindView(R.id.tv_latitude)
+        TextView tvLatitude;
+        @BindView(R.id.tv_langitude)
+        TextView tvLangitude;
         @BindView(R.id.tv_deskripsi)
         TextView tvDeskripsi;
-        @BindView(R.id.cb_destinasi)
-        CheckBox cbDestinasi;
 
         public OriginalViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
+
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_destinasi, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_info_destinasi, parent, false);
         vh = new OriginalViewHolder(v);
         return vh;
     }
@@ -72,27 +73,22 @@ public class DestinasiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        double Latitude;
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
             final DataItemDestinasi item = listItem.get(position);
-            view.tvPemandu.setText(item.getNama());
-            view.tvDeskripsi.setText(item.getDeskripsi());
-            view.cbDestinasi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            String intLatitude = new Double( item.getLatitude()).toString();
+            String intLongitude = new Double( item.getLongitude()).toString();
+            view.tvName.setText(item.getNama());
+            view.tvLatitude.setText(intLatitude);
+            view.tvLangitude.setText( intLongitude );
+            view.tvDeskripsi.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        item.setSelected(isChecked);
-                    } else {
-                        item.setSelected(false);
-                    }
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(position);
+                    mOnItemClickListener.onItemClick(position);
                 }
             });
-//            view.tvBuatJanji.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mOnItemClickListener.onItemClick(position);
-//                }
-//            });
 
         }
     }
@@ -125,6 +121,7 @@ public class DestinasiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             listItem.clear();
         listItem.addAll(datas);
         notifyDataSetChanged();
+
     }
 
     public DataItemDestinasi getItem(int pos) {
@@ -137,34 +134,23 @@ public class DestinasiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return time;
     }
 
-    public void setFilter(String query,List<DataItemDestinasi> list) {
-        listItem = new ArrayList<>();
-        JaroWinkler jw = new JaroWinkler();
-        List<DataItemDestinasi> destinasiList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            String  input = list.get(i).getNama().trim().toString();
-            input = input.replace(" ", "");
-                    Log.d("JARO", input.toLowerCase()+" "+query.trim().toString().toLowerCase()+" "+jw.similarity(list.get(i).getNama().trim().toString(),query.trim().toString()));
-            if(jw.similarity(input.toLowerCase(),query.trim().toString().toLowerCase()) > 0.7){
-                destinasiList.add(list.get(i));
-            }
-        }
-        listItem.addAll(destinasiList);
-        notifyDataSetChanged();
-    }
 
     public List<DataItemDestinasi> getListItem() {
         return listItem;
     }
 
-    public List<DataItemDestinasi> getSelected() {
-        List<DataItemDestinasi> bahasaSelected = new ArrayList<>();
-        for (int i = 0; i < listItem.size(); i++) {
-            if (listItem.get(i).isSelected()) {
-                bahasaSelected.add(listItem.get(i));
-            }
-        }
-        return bahasaSelected;
+//    public List<DataItemPemandu> getSelected() {
+//        List<DataItemPemandu> bahasaSelected = new ArrayList<>();
+//        for (int i = 0; i < listItem.size(); i++) {
+//            if (listItem.get(i).isSelected()) {
+//                bahasaSelected.add(listItem.get(i));
+//            }
+//        }
+//        return bahasaSelected;
+//    }
+
+    public void filterJaroWinkler(){
+
     }
 
 

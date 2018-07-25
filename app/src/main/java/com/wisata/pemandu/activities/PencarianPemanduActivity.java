@@ -9,19 +9,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.wisata.pemandu.R;
-import com.wisata.pemandu.adapters.DestinasiAdapter;
 import com.wisata.pemandu.adapters.PemanduAdapter;
-import com.wisata.pemandu.models.BahasaResponse;
+import com.wisata.pemandu.algorithm.Haversine;
 import com.wisata.pemandu.models.DataItemDestinasi;
+import com.wisata.pemandu.models.DataItemPemandu;
 import com.wisata.pemandu.models.PemanduResponse;
+import com.wisata.pemandu.utils.GPSTracker;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,9 +44,12 @@ public class PencarianPemanduActivity extends AppCompatActivity {
     @BindView(R.id.btn_ok)
     Button btnOk;
 
-    List<DataItemDestinasi> itemBahasaList = new ArrayList<>();
+    List<DataItemPemandu> itemPemandus = new ArrayList<>();
 
     PemanduAdapter adapter;
+    double latitude, longitude;
+
+    GPSTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +61,27 @@ public class PencarianPemanduActivity extends AppCompatActivity {
         recyler.setLayoutManager(new LinearLayoutManager(this));
         recyler.setAdapter(adapter);
 
-        loadBahasa();
+        gpsTracker = new GPSTracker(this);
+        if (gpsTracker.canGetLocation()) {
+            latitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
+            // \n is for new line
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        } else {
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gpsTracker.showSettingsAlert();
+        }
+
+
+        loadPemandu();
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 //                itemAdapter.clear();
-                loadBahasa();
+                loadPemandu();
             }
         });
 
@@ -75,7 +96,7 @@ public class PencarianPemanduActivity extends AppCompatActivity {
     }
 
 
-    void loadBahasa() {
+    void loadPemandu() {
         refresh.setRefreshing(true);
         AndroidNetworking.get(PEMANDU)
                 .build()
@@ -84,7 +105,23 @@ public class PencarianPemanduActivity extends AppCompatActivity {
                     public void onResponse(Object response) {
                         refresh.setRefreshing(false);
                         if (response instanceof PemanduResponse) {
-                            adapter.swap(((PemanduResponse) response).getData());
+                            itemPemandus = ((PemanduResponse) response).getData();
+                            for (int i = 0; i < itemPemandus.size(); i++) {
+                                itemPemandus.get(i).setDistance(Haversine.distance(latitude,longitude,itemPemandus.get(i).getLatitude(),itemPemandus.get(i).getLongitude()));
+                            }
+
+                            for (int i = 0; i < itemPemandus.size(); i++) {
+                                Log.d(TAG, "onResponse: "+itemPemandus.get(i).getDistance());
+                            }
+
+                            Collections.sort(itemPemandus, new Comparator<DataItemPemandu>() {
+                                @Override
+                                public int compare(DataItemPemandu o1, DataItemPemandu o2) {
+                                    return Double.compare(o1.getDistance(), o2.getDistance());
+                                }
+                            });
+
+                            adapter.swap(itemPemandus);
                         }
                     }
 

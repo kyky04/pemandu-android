@@ -57,7 +57,7 @@ public class DestinasiActivity extends AppCompatActivity {
         recyler.setLayoutManager(new LinearLayoutManager(this));
         recyler.setAdapter(adapter);
 
-//        loadBahasa();
+//        loadPemandu();
         searchview.onActionViewExpanded();
         searchview.setOnClickListener(new View.OnClickListener() {
             @Override
