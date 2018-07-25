@@ -19,20 +19,22 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".activities.PencarianBahasaActivity" />
         <activity android:name=".activities.PencarianPemanduActivity" />
         <activity android:name=".activities.PencarianDestinasiActivity" />
         <activity android:name=".activities.DestinasiActivity" />
         <activity android:name=".activities.InfoDestinasiActivity" />
         <activity android:name=".activities.BeritaActivity" />
-        <activity android:name=".activities.LocationServiceActivity"></activity>
+        <activity android:name=".activities.LocationServiceActivity" />
+        <activity android:name=".activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.RegisterActivity"></activity>
     </application>
 
 </manifest>

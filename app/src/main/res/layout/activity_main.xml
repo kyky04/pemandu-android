@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="Menu"
+        app:titleTextColor="@color/white"></android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,6 +157,7 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:background="@color/amber_700"
                 android:id="@+id/btn_berita"
                 android:layout_width="match_parent"
@@ -179,6 +189,42 @@
                         android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:src="@drawable/newspaper"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/amber_700"
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="LOGOUT"
+                        android:textSize="24dp"
+
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_logout"
                         />
                 </LinearLayout>
             </LinearLayout>
