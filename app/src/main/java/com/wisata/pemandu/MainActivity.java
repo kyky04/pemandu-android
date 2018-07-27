@@ -1,5 +1,6 @@
 package com.wisata.pemandu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
 import com.wisata.pemandu.activities.BeritaActivity;
 import com.wisata.pemandu.activities.DestinasiActivity;
@@ -24,6 +26,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
     @BindView(R.id.btn_pencarian)
     LinearLayout btnPencarian;
     @BindView(R.id.btn_destinasi)
@@ -42,7 +46,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//        setSupportActionBar( toolbar );
+//        getSupportActionBar().setTitle( "" );
+
+        session = new Session( this );
     }
+
 
     @OnClick({R.id.btn_pencarian, R.id.btn_destinasi, R.id.btn_pemandu, R.id.btn_berita, R.id.btn_logout})
     public void onViewClicked(View view) {
@@ -60,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LocationServiceActivity.class));
                 break;
             case R.id.btn_logout:
-//                session.logoutUser();
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
+                session.logoutUser();
+//                startActivity(new Intent(this, LoginActivity.class));
+//                finish();
                 break;
         }
     }
@@ -83,10 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 session.logoutUser();
 
 //                startActivity( new Intent( this, LoginActivity.class ) );
-//                finish();
+                finish();
                 break;
-
-
         }
         return super.onOptionsItemSelected( item );
     }

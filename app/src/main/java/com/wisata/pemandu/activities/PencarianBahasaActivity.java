@@ -23,7 +23,9 @@ import com.wisata.pemandu.R;
 import com.wisata.pemandu.adapters.BahasaAdapter;
 import com.wisata.pemandu.models.BahasaResponse;
 import com.wisata.pemandu.models.DataItemBahasa;
+import com.wisata.pemandu.utils.CommonUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class PencarianBahasaActivity extends AppCompatActivity {
 
     List<DataItemBahasa> itemBahasaList = new ArrayList<>();
 
-    private FastAdapter<DataItemBahasa> fastItemAdapter;
+//    private FastAdapter<DataItemBahasa> fastItemAdapter;
 
     BahasaAdapter bahasaAdapter;
 
@@ -137,7 +139,15 @@ public class PencarianBahasaActivity extends AppCompatActivity {
     @OnClick(R.id.btn_ok)
     public void onViewClicked() {
         Log.d(TAG, "onViewClicked: "+bahasaAdapter.getSelected().size());
-        Intent intent = new Intent(this, PencarianDestinasiActivity.class);
-        startActivity(intent);
+        if (bahasaAdapter.getSelected().size() != 0){
+            Intent intent = new Intent(this, PencarianDestinasiActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable( "bahasa", (Serializable) bahasaAdapter.getSelected() );
+            intent.putExtras( bundle );
+            startActivity(intent);
+        } else {
+            CommonUtil.showSnack( this, "Pilih Bahasa yang dikuasai" );
+        }
+
     }
 }

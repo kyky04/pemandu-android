@@ -12,12 +12,13 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.fastadapter.listeners.ClickEventHook;
 import com.wisata.pemandu.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DataItemBahasa extends AbstractItem<DataItemBahasa, DataItemBahasa.ViewHolder> {
+public class DataItemBahasa implements Serializable {
 
     @SerializedName("bahasa")
     private String bahasa;
@@ -39,7 +40,7 @@ public class DataItemBahasa extends AbstractItem<DataItemBahasa, DataItemBahasa.
 
     private boolean selected;
 
-    @Override
+//    @Override
     public boolean isSelected() {
         return selected;
     }
@@ -51,6 +52,8 @@ public class DataItemBahasa extends AbstractItem<DataItemBahasa, DataItemBahasa.
     public void setBahasa(String bahasa) {
         this.bahasa = bahasa;
     }
+
+
 
     public String getBahasa() {
         return bahasa;
@@ -96,61 +99,74 @@ public class DataItemBahasa extends AbstractItem<DataItemBahasa, DataItemBahasa.
         return deletedAt;
     }
 
-    @NonNull
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
-    }
+//    @NonNull
+////    @Override
+//    public ViewHolder getViewHolder(View v) {
+//        return new ViewHolder(v);
+//    }
+//
+//    @Override
+//    public int getType() {
+//        return R.id.fastadapter_item_bahasa;
+//    }
+//
+//    @Override
+//    public int getLayoutRes() {
+//        return R.layout.item_bahasa;
+//    }
+
+
+//    public class ViewHolder extends FastAdapter.ViewHolder<DataItemBahasa> {
+//        protected View view;
+//        @BindView(R.id.tv_bahasa)
+//        TextView tvBahasa;
+//        @BindView(R.id.cb_bahasa)
+//        CheckBox cbBahasa;
+//
+//        public ViewHolder(View itemView) {
+//            super(itemView);
+//            ButterKnife.bind(this, itemView);
+//            this.view = itemView;
+//        }
+//
+//        @Override
+//        public void bindView(DataItemBahasa item, List<Object> payloads) {
+//            tvBahasa.setText(item.bahasa);
+//        }
+//
+//        @Override
+//        public void unbindView(DataItemBahasa item) {
+//            tvBahasa.setText(null);
+//        }
+//    }
+//
+//    public static class CheckBoxClickEvent extends ClickEventHook<DataItemBahasa> {
+//        @Override
+//        public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
+//            if (viewHolder instanceof ViewHolder) {
+//                return ((ViewHolder) viewHolder).cbBahasa;
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        public void onClick(View v, int position, FastAdapter<DataItemBahasa> fastAdapter, DataItemBahasa item) {
+//            fastAdapter.toggleSelection(position);
+//        }
+
+//    }
 
     @Override
-    public int getType() {
-        return R.id.fastadapter_item_bahasa;
-    }
-
-    @Override
-    public int getLayoutRes() {
-        return R.layout.item_bahasa;
-    }
-
-
-    public class ViewHolder extends FastAdapter.ViewHolder<DataItemBahasa> {
-        protected View view;
-        @BindView(R.id.tv_bahasa)
-        TextView tvBahasa;
-        @BindView(R.id.cb_bahasa)
-        CheckBox cbBahasa;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            this.view = itemView;
-        }
-
-        @Override
-        public void bindView(DataItemBahasa item, List<Object> payloads) {
-            tvBahasa.setText(item.bahasa);
-        }
-
-        @Override
-        public void unbindView(DataItemBahasa item) {
-            tvBahasa.setText(null);
-        }
-    }
-
-    public static class CheckBoxClickEvent extends ClickEventHook<DataItemBahasa> {
-        @Override
-        public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
-            if (viewHolder instanceof ViewHolder) {
-                return ((ViewHolder) viewHolder).cbBahasa;
-            }
-            return null;
-        }
-
-        @Override
-        public void onClick(View v, int position, FastAdapter<DataItemBahasa> fastAdapter, DataItemBahasa item) {
-            fastAdapter.toggleSelection(position);
-        }
-
+    public String toString() {
+        return "DataItemBahasa{" +
+                "bahasa='" + bahasa + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", kode='" + kode + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", id=" + id +
+                ", deletedAt=" + deletedAt +
+                ", selected=" + selected +
+                '}';
     }
 
 }

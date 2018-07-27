@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.RegisterActivity"
+    android:background="@drawable/loginbackground"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,6 +37,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
         <LinearLayout
+            android:background="@drawable/whitetransparan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
@@ -67,11 +69,13 @@
             <EditText
                 android:id="@+id/dt_tgl_lahir"
                 android:inputType="date"
+                android:hint="yyyy-mm-dd"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
                 android:id="@+id/et_nomor_tlp"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="+085**********"/>
