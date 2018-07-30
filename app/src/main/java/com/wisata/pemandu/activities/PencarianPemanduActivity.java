@@ -137,14 +137,16 @@ public class PencarianPemanduActivity extends AppCompatActivity {
                         if (response instanceof PemanduBahasaResponse) {
                             for (int i = 0; i < ((PemanduBahasaResponse) response).getData().size(); i++) {
                                 itemPemandus.add(((PemanduBahasaResponse) response).getData().get(i).getPemandu());
+                                Log.d(TAG, "onResponse: "+((PemanduBahasaResponse)response).getData().get(i).getPemandu().getLongitude());
                             }
                             for (int i = 0; i < itemPemandus.size(); i++) {
-                                    itemPemandus.get(i).setDistance(Haversine.distance(latitude,longitude,itemPemandus.get(i).getLatitude(),itemPemandus.get(i).getLongitude()));
+                                    itemPemandus.get(i).setDistance(Haversine.distance(latitude,longitude,((PemanduBahasaResponse) response).getData().get(i).getPemandu().getLatitude(),((PemanduBahasaResponse)response).getData().get(i).getPemandu().getLongitude()));
+
                             }
 
 
-                            for (int i = 0; i < listPemanduBahasa.size(); i++) {
-                                Log.d(TAG, "onResponse Pemandu: " + i +itemPemandus.get(i).getDistance());
+                            for (int i = 0; i < itemPemandus.size(); i++) {
+                                Log.d(TAG, "onResponse Pemandu: " + i +" "+itemPemandus.get(i).getDistance());
                             }
 
                             Collections.sort(itemPemandus, new Comparator<DataItemPemandu>() {

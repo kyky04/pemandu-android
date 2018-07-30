@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:title="Pilih Destinasi"
+        app:title="Pilih Pemandu"
         app:titleTextColor="@color/white"></android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
