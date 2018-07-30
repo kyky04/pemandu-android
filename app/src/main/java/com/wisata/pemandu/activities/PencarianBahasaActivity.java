@@ -58,39 +58,6 @@ public class PencarianBahasaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pencarian_bahasa);
         ButterKnife.bind(this);
 
-//        itemAdapter = new ItemAdapter();
-
-//        fastItemAdapter = FastAdapter.with(itemAdapter);
-//        fastItemAdapter.withSelectable(true);
-//        fastItemAdapter.withSelectionListener(new ISelectionListener<DataItemBahasa>() {
-//            @Override
-//            public void onSelectionChanged(@Nullable DataItemBahasa item, boolean selected) {
-//                if(selected){
-//                    itemBahasaList.add(item);
-//                }else {
-//                    itemBahasaList.remove(item);
-//                }
-//                Log.d(TAG, "onSelectionChanged: "+item.getBahasa()+" Selected: "+selected);
-//            }
-//        });
-
-//        fastItemAdapter.withOnClickListener(new OnClickListener<DataItemBahasa>() {
-//            @Override
-//            public boolean onClick(@Nullable View v, IAdapter<DataItemBahasa> adapter, DataItemBahasa item, int position) {
-//                fastItemAdapter.toggleSelection(position);
-//                return false;
-//            }
-//        });
-
-//        fastItemAdapter.withOnPreClickListener(new OnClickListener<DataItemBahasa>() {
-//            @Override
-//            public boolean onClick(@Nullable View v, IAdapter<DataItemBahasa> adapter, DataItemBahasa item, int position) {
-//                return false;
-//            }
-//        });
-
-
-//        fastItemAdapter.withEventHook(new DataItemBahasa.CheckBoxClickEvent());
         bahasaAdapter = new BahasaAdapter(this);
         recyler.setLayoutManager(new LinearLayoutManager(this));
         recyler.setAdapter(bahasaAdapter);
@@ -140,7 +107,7 @@ public class PencarianBahasaActivity extends AppCompatActivity {
     public void onViewClicked() {
         Log.d(TAG, "onViewClicked: "+bahasaAdapter.getSelected().size());
         if (bahasaAdapter.getSelected().size() != 0){
-            Intent intent = new Intent(this, PencarianDestinasiActivity.class);
+            Intent intent = new Intent(this, PencarianPemanduActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable( "bahasa", (Serializable) bahasaAdapter.getSelected() );
             intent.putExtras( bundle );

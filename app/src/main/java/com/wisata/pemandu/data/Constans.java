@@ -1,7 +1,7 @@
 package com.wisata.pemandu.data;
 
 public class Constans {
-    public static final String WEB_URL = "http://192.168.1.4/Pencarian/public/api/";
+    public static final String WEB_URL = "http://192.168.1.13/Pencarian/public/api/";
     public static final String PEMANDU = WEB_URL + "pemandu";
     public static final String WISATAWAN = WEB_URL + "login";
     public static final String REGISTER_WISATAWAN = WEB_URL + "createwisatawan";

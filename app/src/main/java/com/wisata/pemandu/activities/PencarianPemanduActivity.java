@@ -42,7 +42,7 @@ import static com.wisata.pemandu.data.Constans.PEMANDU;
 import static com.wisata.pemandu.data.Constans.RESULTBAHASA;
 
 public class PencarianPemanduActivity extends AppCompatActivity {
-    private static final String TAG = "PencarianBahasaActivity";
+    private static final String TAG = "PemanduActivity";
     @BindView(R.id.recyler)
     RecyclerView recyler;
     @BindView(R.id.refresh)
@@ -69,7 +69,7 @@ public class PencarianPemanduActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pencarian_bahasa);
+        setContentView(R.layout.activity_pencarian_pemandu);
         ButterKnife.bind(this);
 
         adapter = new PemanduAdapter(this);
@@ -89,6 +89,10 @@ public class PencarianPemanduActivity extends AppCompatActivity {
             gpsTracker.showSettingsAlert();
         }
 
+        listBahasa = (List<DataItemBahasa>) getIntent().getSerializableExtra("bahasa");
+        for (int i = 0; i<listBahasa.size(); i++){
+            Log.d(TAG, "onCreateBahasa" + listBahasa.get(i).getId());
+        }
 
         loadPemandu();
 
@@ -111,35 +115,36 @@ public class PencarianPemanduActivity extends AppCompatActivity {
     }
 
 
+
+
     void loadPemandu() {
+        adapter.removeAll();
         refresh.setRefreshing(true);
-        AndroidNetworking.get(PEMANDU)
-//        ANRequest.PostRequestBuilder builder = new ANRequest.PostRequestBuilder( RESULTBAHASA );
-//
-//        for (int i = 0; i < listPemanduBahasa.size() ; i++){
-//            int id_bahasa = listPemanduBahasa.get( i ).getId();
-//            Log.d( TAG, "load Data : " + id_bahasa );
-//            builder.addBodyParameter( "id_bahasa[" + i +"]", String.valueOf( id_bahasa ) );
-//        }
-//        builder
+//        AndroidNetworking.get(PEMANDU)
+        ANRequest.PostRequestBuilder builder = new ANRequest.PostRequestBuilder( RESULTBAHASA );
+
+        for (int i = 0; i < listBahasa.size() ; i++){
+            int id_bahasa = listBahasa.get( i ).getId();
+            Log.d( TAG, "load Data : " + id_bahasa );
+            builder.addBodyParameter( "id_bahasa[" + i +"]", String.valueOf( id_bahasa ) );
+        }
+        builder
                 .build()
-                .getAsObject(PemanduResponse.class, new ParsedRequestListener() {
+                .getAsObject(PemanduBahasaResponse.class, new ParsedRequestListener() {
                     @Override
                     public void onResponse(Object response) {
                         refresh.setRefreshing(false);
-                        if (response instanceof PemanduResponse) {
-                            itemPemandus = ((PemanduResponse) response).getData();
-                            for (int i = 0; i < ((PemanduResponse) response).getData().size(); i++) {
-//                                listPemanduBahasa = ((PemanduBahasaResponse) response).getData();
-//                                for (int i = 0; i < PemanduResponse.getData().size(); i++) {
+                        if (response instanceof PemanduBahasaResponse) {
+                            for (int i = 0; i < ((PemanduBahasaResponse) response).getData().size(); i++) {
+                                itemPemandus.add(((PemanduBahasaResponse) response).getData().get(i).getPemandu());
+                            }
+                            for (int i = 0; i < itemPemandus.size(); i++) {
                                     itemPemandus.get(i).setDistance(Haversine.distance(latitude,longitude,itemPemandus.get(i).getLatitude(),itemPemandus.get(i).getLongitude()));
-//                                }
                             }
 
 
                             for (int i = 0; i < listPemanduBahasa.size(); i++) {
                                 Log.d(TAG, "onResponse Pemandu: " + i +itemPemandus.get(i).getDistance());
-//                                hasil.setText( (int) itemPemandus.get( i ).getDistance() );
                             }
 
                             Collections.sort(itemPemandus, new Comparator<DataItemPemandu>() {
@@ -149,7 +154,6 @@ public class PencarianPemanduActivity extends AppCompatActivity {
                                 }
                             });
 
-//                            listPemanduBahasa.addAll( ((PemanduBahasaResponse)response).getData() );
                             adapter.swap(itemPemandus);
                         }
                     }

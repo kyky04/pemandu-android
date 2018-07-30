@@ -67,39 +67,6 @@ public class PencarianDestinasiActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-//        itemAdapter = new ItemAdapter();
-
-//        fastItemAdapter = FastAdapter.with(itemAdapter);
-//        fastItemAdapter.withSelectable(true);
-//        fastItemAdapter.withSelectionListener(new ISelectionListener<DataItemDestinasi>() {
-//            @Override
-//            public void onSelectionChanged(@Nullable DataItemDestinasi item, boolean selected) {
-//                if(selected){
-//                    itemBahasaList.add(item);
-//                }else {
-//                    itemBahasaList.remove(item);
-//                }
-//                Log.d(TAG, "onSelectionChanged: "+item.getBahasa()+" Selected: "+selected);
-//            }
-//        });
-
-//        fastItemAdapter.withOnClickListener(new OnClickListener<DataItemDestinasi>() {
-//            @Override
-//            public boolean onClick(@Nullable View v, IAdapter<DataItemDestinasi> adapter, DataItemDestinasi item, int position) {
-//                fastItemAdapter.toggleSelection(position);
-//                return false;
-//            }
-//        });
-
-//        fastItemAdapter.withOnPreClickListener(new OnClickListener<DataItemDestinasi>() {
-//            @Override
-//            public boolean onClick(@Nullable View v, IAdapter<DataItemDestinasi> adapter, DataItemDestinasi item, int position) {
-//                return false;
-//            }
-//        });
-
-
-//        fastItemAdapter.withEventHook(new DataItemDestinasi.CheckBoxClickEvent());
         adapter = new DestinasiAdapter(this);
         recyler.setLayoutManager(new LinearLayoutManager(this));
         recyler.setAdapter(adapter);
